@@ -53,7 +53,12 @@ let DCArrayOutputMonthlyDistribution = lista.reduce((acc, curr) => {
     return acc
 }, {})
 
+let DCArrayOutputMonthlyDistributionArray = []
+Object.keys(DCArrayOutputMonthlyDistribution).forEach(key=>{
+    DCArrayOutputMonthlyDistributionArray.push({month:key,value:DCArrayOutputMonthlyDistribution[key]})
+})
 //console.log(DCArrayOutputMonthlyDistribution);
+//console.log(DCArrayOutputMonthlyDistributionArray);
 
 // 4. *Határozzuk meg az adott évben  a `DC Array Output` összegét!
 let SumOfDCArrayOut = lista.reduce((acc, curr) => acc += curr['DC Array Output'].value, 0)
@@ -79,6 +84,11 @@ let monthlyDispersion = lista.reduce((acc, curr, i) => {
     return acc
 }, {})
 
+let monthlyDispersionArray = []
+Object.keys(monthlyDispersion).forEach(key=>{
+    monthlyDispersionArray.push({month:key,value:monthlyDispersion[key]})
+})
+//console.log(monthlyDispersionArray);
 //console.log(monthlyDispersion);
 
 //7. ***Készítsünk egy összetett adatstruktúrát a havi bontásra vonatkozó `DC Array Output`-ra:
@@ -135,16 +145,16 @@ let descendSortMonths = sortedMonths.reverse()
 let dailyDCArrayOutput = []
 let dailySumOfDCAO = 0
 
-for( let i =0;i<lista.length;i++){
-    if(lista[i].month === lista[i+1]?.month && lista[i].Day === lista[i+1]?.Day){
-        dailySumOfDCAO += lista[i]['DC Array Output'].value
+lista.forEach((data,i)=>{
+    if(data.month === lista[i+1]?.month && data.Day === lista[i+1]?.Day){
+        dailySumOfDCAO += data['DC Array Output'].value
     } else {
-        dailySumOfDCAO += lista[i]['DC Array Output'].value
-        dailyDCArrayOutput.push({month: lista[i].month, day: lista[i].Day, value:dailySumOfDCAO})
+        dailySumOfDCAO += data['DC Array Output'].value
+        dailyDCArrayOutput.push({month: data.month, day: data.Day, value:dailySumOfDCAO})
         dailySumOfDCAO = 0
     }
-}
-//console.log(dailyDCArrayOutput);
+})
+console.log(dailyDCArrayOutput);
 
 // 11. **Rendezzük növekvő sorrendbe a napi szintű `DC Array Output` statisztikát.
 let ascendingOrderDailyDCAO = [...dailyDCArrayOutput].sort((a,b)=> a.value - b.value)
