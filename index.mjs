@@ -154,7 +154,7 @@ lista.forEach((data,i)=>{
         dailySumOfDCAO = 0
     }
 })
-console.log(dailyDCArrayOutput);
+//console.log(dailyDCArrayOutput);
 
 // 11. **Rendezzük növekvő sorrendbe a napi szintű `DC Array Output` statisztikát.
 let ascendingOrderDailyDCAO = [...dailyDCArrayOutput].sort((a,b)=> a.value - b.value)
@@ -231,3 +231,17 @@ helperArray.forEach(data=>{
 
 // let test = result.reduce((acc,curr)=>acc+=curr.value,0)
 // console.log(test, sumOfDCAO);
+
+// 19.
+// avg solar panel eletricity production in hungary per year = 1250kWh/m^2
+
+const dcArrayOutput = lista.map(data=>data['DC Array Output'].value)
+
+let yearlyElectricityProduction = 0 //Wh
+
+for(let i=0;i<dcArrayOutput.length-1;i++){
+    yearlyElectricityProduction += dcArrayOutput[i] + 30 * (dcArrayOutput[i+1]-dcArrayOutput[i]) / 60
+}
+
+
+console.log(yearlyElectricityProduction); // 7546907 Wh = 7546.9 kWh
