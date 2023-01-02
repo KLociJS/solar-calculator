@@ -237,11 +237,9 @@ helperArray.forEach(data=>{
 
 const dcArrayOutput = lista.map(data=>data['DC Array Output'].value)
 
-let yearlyElectricityProduction = 0 //Wh
-
-for(let i=0;i<dcArrayOutput.length-1;i++){
-    yearlyElectricityProduction += dcArrayOutput[i] + 30 * (dcArrayOutput[i+1]-dcArrayOutput[i]) / 60
-}
+let yearlyElectricityProduction = dcArrayOutput.reduce((acc,curr,i)=>dcArrayOutput[i+1]!==undefined ? acc+=curr+(dcArrayOutput[i+1]-curr)/2 : acc,0)
 
 
 console.log(yearlyElectricityProduction); // 7546907 Wh = 7546.9 kWh
+
+//console.log(lista);
